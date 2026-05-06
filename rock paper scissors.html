@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rock Paper Scissors</title>
+<style>
+  body{
+    margin:0;background:#0f172a;color:#fff;font-family:Arial;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    min-height:100vh;text-align:center
+  }
+  h1{color:#38bdf8;margin-bottom:10px}
+ .choices{display:flex;gap:15px;margin:30px 0}
+ .choice{
+    width:100px;height:100px;background:#1e293b;border-radius:16px;
+    display:flex;align-items:center;justify-content:center;font-size:40px;
+    cursor:pointer;transition:0.15s
+  }
+ .choice:hover{background:#334155;transform:scale(1.05)}
+ .score{font-size:20px;margin-bottom:15px}
+ #result{font-size:24px;font-weight:bold;min-height:30px;margin-top:15px}
+  button{
+    margin-top:20px;padding:12px 24px;border:none;border-radius:10px;
+    background:#22c55e;color:#fff;font-weight:bold;cursor:pointer
+  }
+</style>
+</head>
+<body>
+  <h1>Rock Paper Scissors</h1>
+  <div class="score">You: <span id="you">0</span> | AI: <span id="ai">0</span></div>
+  <div class="choices">
+    <div class="choice" onclick="play('rock')">✊</div>
+    <div class="choice" onclick="play('paper')">✋</div>
+    <div class="choice" onclick="play('scissors')">✌️</div>
+  </div>
+  <div id="result">Pick one to start</div>
+  <button onclick="reset()">Reset Score</button>
+
+<script>
+let you=0,ai=0;
+const choices=['rock','paper','scissors'];
+const emojis={rock:'✊',paper:'✋',scissors:'✌️'};
+
+function play(user){
+  const cpu=choices[Math.floor(Math.random()*3)];
+  let res='';
+  
+  if(user===cpu) res=`Draw! Both picked ${emojis[user]}`;
+  else if(
+    (user==='rock'&&cpu==='scissors')||
+    (user==='paper'&&cpu==='rock')||
+    (user==='scissors'&&cpu==='paper')
+  ){res=`You Win! ${emojis[user]} beats ${emojis[cpu]}`;you++;}
+  else{res=`AI Wins! ${emojis[cpu]} beats ${emojis[user]}`;ai++;}
+  
+  document.getElementById('result').textContent=res;
+  document.getElementById('you').textContent=you;
+  document.getElementById('ai').textContent=ai;
+}
+
+function reset(){
+  you=0;ai=0;
+  document.getElementById('you').textContent=0;
+  document.getElementById('ai').textContent=0;
+  document.getElementById('result').textContent='Pick one to start';
+}
+</script>
+</body>
+</html>
